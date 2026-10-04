@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { EvidenceCitation, MemoryItem } from '../types';
-import { X, ShieldCheck, Calendar, FileText, Mic, MessageSquare, Lightbulb, Play, Pause, ExternalLink, Check, Copy } from 'lucide-react';
+import { X, ShieldCheck, Calendar, FileText, Mic, MessageSquare, Lightbulb, Play, Pause, Check, Copy } from 'lucide-react';
+import { playTapeNoise, playChime } from '../utils/audioSynth';
 
 interface EvidenceModalProps {
   evidence: EvidenceCitation | null;
@@ -11,6 +12,16 @@ interface EvidenceModalProps {
 export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryItem, onClose }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [copiedHash, setCopiedHash] = useState(false);
+
+  useEffect(() => {
+    let stopAudio: (() => void) | null = null;
+    if (isPlaying) {
+      stopAudio = playTapeNoise(4.0);
+    }
+    return () => {
+      if (stopAudio) stopAudio();
+    };
+  }, [isPlaying]);
 
   if (!evidence && !memoryItem) return null;
 
@@ -33,6 +44,7 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
   };
 
   const copyHashToClipboard = () => {
+    playChime(500, 'sine', 0.1);
     navigator.clipboard.writeText(hash);
     setCopiedHash(true);
     setTimeout(() => setCopiedHash(false), 2000);
@@ -67,8 +79,11 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
             </div>
           </div>
           <button
-            onClick={onClose}
-            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-[#232738] transition-colors"
+            onClick={() => {
+              playChime(250, 'sine', 0.1);
+              onClose();
+            }}
+            className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-[#232738] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -98,7 +113,7 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
               <div className="flex items-center gap-4">
                 <button
                   onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-transform active:scale-95 shadow-lg shadow-amber-500/20"
+                  className="w-10 h-10 rounded-full bg-amber-500 hover:bg-amber-400 text-black flex items-center justify-center transition-transform active:scale-95 shadow-lg shadow-amber-500/20 cursor-pointer"
                 >
                   {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                 </button>
@@ -108,10 +123,10 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
                       key={idx}
                       className={`flex-1 rounded-full transition-all duration-300 ${
                         isPlaying 
-                          ? 'bg-amber-400' 
+                          ? 'bg-amber-400 animate-pulse' 
                           : idx < 10 ? 'bg-amber-400/80' : 'bg-slate-700'
                       }`}
-                      style={{ height: isPlaying ? `${Math.max(6, (height * (Math.sin(idx + Date.now()) + 1.2)) % 36)}px` : `${height}px` }}
+                      style={{ height: isPlaying ? `${Math.max(8, (height * (Math.sin(idx + Date.now()) + 1.2)) % 36)}px` : `${height}px` }}
                     />
                   ))}
                 </div>
@@ -125,7 +140,7 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
               <span className="text-xs uppercase font-mono tracking-wider text-slate-400 block mb-2 font-medium">
                 Cited Historical Excerpt
               </span>
-              <div className="p-4 rounded-xl bg-amber-500/5 border border-amber-500/20 text-amber-100 text-sm leading-relaxed font-sans">
+              <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-100 text-sm leading-relaxed font-sans">
                 "{exactQuote}"
               </div>
             </div>
@@ -136,7 +151,7 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
             <span className="text-xs uppercase font-mono tracking-wider text-slate-400 block mb-2 font-medium">
               Complete Memory Context
             </span>
-            <div className="p-4 rounded-xl bg-[#0f1118] border border-[#202536] text-slate-300 leading-relaxed font-sans whitespace-pre-line text-sm selection:bg-amber-500/30">
+            <div className="p-4 rounded-xl bg-[#0f1118] border border-[#202536] text-slate-200 leading-relaxed font-sans whitespace-pre-line text-sm selection:bg-amber-500/30">
               {fullContent}
             </div>
           </div>
@@ -144,12 +159,12 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
           {/* Cryptographic hash proof */}
           <div className="pt-2 border-t border-[#202536] flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-slate-400 font-mono">
             <div className="flex items-center gap-2 truncate">
-              <span className="text-slate-500">Integrity Hash:</span>
-              <span className="text-slate-300 truncate max-w-xs">{hash}</span>
+              <span className="text-slate-400">Integrity Hash:</span>
+              <span className="text-slate-200 truncate max-w-xs">{hash}</span>
             </div>
             <button
               onClick={copyHashToClipboard}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#1c202e] hover:bg-[#272d40] text-slate-300 transition-colors w-fit"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#1c202e] hover:bg-[#272d40] text-slate-200 transition-colors w-fit cursor-pointer"
             >
               {copiedHash ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
               <span>{copiedHash ? 'Copied' : 'Copy Hash'}</span>
@@ -158,11 +173,14 @@ export const EvidenceModal: React.FC<EvidenceModalProps> = ({ evidence, memoryIt
         </div>
 
         {/* Modal footer */}
-        <div className="px-6 py-3.5 border-t border-[#232738] bg-[#141722] flex justify-between items-center text-xs text-slate-400">
-          <span>Stored on device • Never sent to cloud servers</span>
+        <div className="px-6 py-3.5 border-t border-[#232738] bg-[#141722] flex justify-between items-center text-xs text-slate-400 font-mono">
+          <span>Stored on SSD • Zero cloud transmission</span>
           <button
-            onClick={onClose}
-            className="px-4 py-1.5 rounded-lg bg-[#24293a] hover:bg-[#30374e] text-white font-medium transition-colors"
+            onClick={() => {
+              playChime(250, 'sine', 0.1);
+              onClose();
+            }}
+            className="px-4 py-1.5 rounded-lg bg-[#24293a] hover:bg-[#30374e] text-white font-medium transition-colors cursor-pointer"
           >
             Close
           </button>
