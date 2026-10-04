@@ -115,8 +115,8 @@ Your private life shouldn't be sent to proprietary cloud APIs.
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/echo-memory-layer.git
-cd echo-memory-layer
+git clone https://github.com/Ayushgupta1715/echo-memory.git
+cd echo-memory
 
 # Install dependencies
 npm install

@@ -42,7 +42,7 @@ Unlike normal AI that pretends to know everything or acts like a generic search 
 
 ## 🎥 Live Demo & Repository
 
-- **GitHub Repository**: [https://github.com/your-username/echo-memory](https://github.com/your-username/echo-memory) *(replace with your repo)*
+- **GitHub Repository**: [https://github.com/Ayushgupta1715/echo-memory](https://github.com/Ayushgupta1715/echo-memory)
 - **Live Interactive Demo**: [https://echo-memory.vercel.app](https://echo-memory.vercel.app) *(or your deployed URL)*
 
 ---
