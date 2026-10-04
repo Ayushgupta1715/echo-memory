@@ -39,10 +39,10 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const getModelLabel = () => {
     switch (selectedModel) {
-      case 'gemma-2b': return 'Gemma 2B (On-Device)';
-      case 'llama-3.2-3b': return 'Llama 3.2 3B';
-      case 'qwen-2.5-7b': return 'Qwen 2.5 7B';
-      case 'mistral-nemo': return 'Mistral Nemo';
+      case 'gemma-2b': return 'Local SLM (Edge Demo)';
+      case 'llama-3.2-3b': return 'Llama 3.2 3B (Local)';
+      case 'qwen-2.5-7b': return 'Qwen 2.5 7B (Local)';
+      case 'mistral-nemo': return 'Mistral Nemo (Local)';
     }
   };
 
@@ -57,9 +57,10 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#0b0c10]/95 backdrop-blur-md border-b border-[#1c1f2e]">
+    /* 1. Header is permanently fixed at the top of the viewport with high z-index and zero overlap */
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#0b0c10]/98 backdrop-blur-xl border-b border-[#1c1f2e] shadow-xl">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Top bar */}
+        {/* Top row */}
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div 
@@ -88,39 +89,38 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Right Action Cluster */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Air-gap / Offline Status button */}
+            {/* 14. Real Interactive Air-Gap Toggle Switch */}
             <button
               onClick={handleOfflineToggle}
               title={isOfflineMode ? "Air-Gap Active: 100% on-device queries" : "Click to test air-gapped offline capability"}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-all border cursor-pointer ${
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono transition-all border cursor-pointer ${
                 isOfflineMode
-                  ? 'bg-emerald-950/40 text-emerald-300 border-emerald-600/60 shadow-sm shadow-emerald-500/10'
-                  : 'bg-[#131622] text-slate-300 border-[#22283a] hover:border-slate-500 hover:text-white'
+                  ? 'bg-emerald-950/70 text-emerald-200 border-emerald-500/80 shadow-md shadow-emerald-500/20'
+                  : 'bg-[#141724] text-slate-300 border-[#262c3e] hover:border-slate-500'
               }`}
             >
-              {isOfflineMode ? (
-                <>
-                  <WifiOff className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="font-semibold text-emerald-300">Air-Gapped Mode</span>
-                </>
-              ) : (
-                <>
-                  <Wifi className="w-3.5 h-3.5 text-slate-400" />
-                  <span>Simulate Air-Gap</span>
-                </>
-              )}
+              <div className={`w-2 h-2 rounded-full ${isOfflineMode ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
+              <span className="font-semibold">
+                {isOfflineMode ? 'Offline Mode: ON' : 'Offline Mode: OFF'}
+              </span>
+              {/* Mechanical toggle slider visual */}
+              <div className={`w-7 h-3.5 rounded-full p-0.5 flex items-center transition-colors ${
+                isOfflineMode ? 'bg-emerald-500 justify-end' : 'bg-slate-700 justify-start'
+              }`}>
+                <div className="w-2.5 h-2.5 rounded-full bg-white shadow-sm" />
+              </div>
             </button>
 
-            {/* Model Architecture pill */}
+            {/* 15. Honest Model Badge */}
             <button
               onClick={() => {
                 playChime(380, 'sine', 0.15);
                 onOpenPrivacy();
               }}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-[#131622] hover:bg-[#1a1f30] text-slate-300 border border-[#22283a] transition-colors font-mono cursor-pointer"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs bg-[#131622] hover:bg-[#1a1f30] text-slate-200 border border-[#22283a] transition-colors font-mono cursor-pointer"
             >
               <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              <span className="text-slate-200">{getModelLabel()}</span>
+              <span>{getModelLabel()}</span>
             </button>
 
             {/* Ingest Memory CTA */}

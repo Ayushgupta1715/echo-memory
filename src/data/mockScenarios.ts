@@ -12,6 +12,9 @@ export const ASK_PAST_SCENARIOS: Record<string, QueryResult> = {
     id: 'res-1',
     query: 'Why did I decide to quit that project?',
     curatedDate: 'March 2025',
+    confidenceScore: 87,
+    confidenceLabel: 'High',
+    supportingMemoriesCount: 3,
     answer:
       'You decided to pause and archive the dev-tool project on March 12, 2025 because of three compounding factors:',
     synthesizedPoints: [
@@ -66,10 +69,70 @@ export const ASK_PAST_SCENARIOS: Record<string, QueryResult> = {
     ],
   },
 
+  'what-believed-2024': {
+    id: 'res-3',
+    query: 'What did I believe in 2024?',
+    curatedDate: 'August – November 2024',
+    confidenceScore: 84,
+    confidenceLabel: 'High',
+    supportingMemoriesCount: 3,
+    answer:
+      'In 2024, your memories document a period of high exploration contrasted with self-limiting beliefs:',
+    synthesizedPoints: [
+      'You believed public speaking was your fundamental weakness following a 10-second freeze during freshman seminar in October 2024.',
+      'You believed that student expense tracking could be solved with a simple 1-tap manual logging PWA (before realizing manual logging causes user churn).',
+      'You believed you lacked production engineering credibility compared to peers, creating anxiety before hackathons.',
+    ],
+    interestingNuance:
+      'Ironically, just one month after documenting that public speaking was your "biggest weakness", you won the Best Pitch & Storytelling Award at DevSprint 2024 in November.',
+    evidence: [
+      {
+        memoryId: 'mem-401',
+        date: 'October 18, 2024',
+        title: 'Freshman Seminar presentation panic',
+        source: 'Apple Notes',
+        type: 'note',
+        exactQuote: 'Froze for 10 seconds during opening slide. Throat dry, hands shaking. Public speaking is definitely my biggest weakness.',
+        context: 'Private note written after freshman seminar presentation.',
+        relevanceScore: 96,
+        hash: 'sha256:8b9c0d1e...2d3e',
+      },
+      {
+        memoryId: 'mem-201',
+        date: 'August 14, 2024',
+        title: 'Scratchpad: Student Expense Tracker idea',
+        source: 'Obsidian Notes',
+        type: 'idea',
+        exactQuote: 'College students get pocket money once a month and run out by day 18... super simple offline PWA where you tap a single button to add ₹50 chai.',
+        context: 'Initial conception of student budgeting.',
+        relevanceScore: 90,
+        hash: 'sha256:b10a8db1...e3fe5',
+      },
+      {
+        memoryId: 'mem-403',
+        date: 'November 24, 2024',
+        title: 'National Hackathon Finals Pitch Award',
+        source: 'Certificate / Photo Upload',
+        type: 'screenshot',
+        exactQuote: 'Awarded "Best Pitch & Communication" at DevSprint 2024. Jury praised clarity, storytelling, and ability to handle adversarial Q&A.',
+        context: 'Empirical record disproving the October speaking belief.',
+        relevanceScore: 94,
+        hash: 'sha256:0d1e2f3a...4f5a',
+      },
+    ],
+    suggestedFollowUps: [
+      'Compare my 2024 beliefs to my 2026 convictions',
+      'How did my perspective on public speaking change?',
+    ],
+  },
+
   'startup-ideas-abandoned': {
     id: 'res-2',
     query: 'What startup ideas have I abandoned or shelved?',
     curatedDate: '2024 - 2026',
+    confidenceScore: 91,
+    confidenceLabel: 'High',
+    supportingMemoriesCount: 3,
     answer:
       'Echo identified 3 major project concepts that you conceptualized, explored, and subsequently placed on hold:',
     synthesizedPoints: [

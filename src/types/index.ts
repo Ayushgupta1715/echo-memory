@@ -42,6 +42,9 @@ export interface QueryResult {
   curatedDate: string;
   interestingNuance?: string;
   suggestedFollowUps?: string[];
+  confidenceScore?: number; // e.g. 87%
+  confidenceLabel?: 'High' | 'Medium' | 'Low';
+  supportingMemoriesCount?: number;
 }
 
 export interface IdeaEvolutionNode {
