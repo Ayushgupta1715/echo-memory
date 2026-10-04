@@ -158,11 +158,16 @@ export const HomeOverview: React.FC<HomeOverviewProps> = ({
         </p>
         
         {/* 6. "Built for Ayush" Subtitle badge */}
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#161a29] border border-[#272f48] text-xs font-mono text-slate-300">
-          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-          <span>Built for Ayush</span>
-          <span className="text-slate-500">•</span>
-          <span className="text-slate-400">21 historical memories indexed</span>
+        <div className="flex flex-col items-center gap-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#161a29] border border-[#272f48] text-xs font-mono text-slate-300 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className="font-semibold text-amber-300">Built for Ayush</span>
+            <span className="text-slate-500">•</span>
+            <span className="text-slate-400">21 historical memories indexed</span>
+          </div>
+          <p className="text-xs text-slate-400 italic max-w-md mx-auto">
+            &ldquo;I know I&apos;ve thought about this before&hellip; I just can&apos;t remember where.&rdquo;
+          </p>
         </div>
       </div>
 
