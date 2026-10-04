@@ -2,6 +2,7 @@
 
 > **What if your AI didn't know more about the world—but remembered more about you?**
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live%20Website-success.svg)](https://ayushgupta1715.github.io/echo-memory/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Privacy: Zero Cloud Egress](https://img.shields.io/badge/Privacy-100%25%20On--Device-emerald.svg)]()
 [![Architecture: Open Weights](https://img.shields.io/badge/Models-Gemma%20%7C%20Llama%20%7C%20Qwen-amber.svg)]()
